@@ -6,4 +6,5 @@ header a:hover,
 header a.active {
     color: #13b5ea;
     transition: color 300ms ease-in;
+    /* background: linear-gradient(0deg, rgba(30, 49, 66, 0.76), 90deg, rgba(30, 49, 66, 0.76)); */
 }
