@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+header a:hover,
+header a.active {
+    color: #13b5ea;
+    transition: color 300ms ease-in;
+}
