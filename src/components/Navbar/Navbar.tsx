@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import navlogo from "../../assets/logo.png";
+import navlogo from "/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { motion } from "framer-motion";
