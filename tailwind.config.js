@@ -6,6 +6,7 @@ export default {
       colors: {
         "color-sky": "#13b5ea",
         "color-gray": "#656c6c",
+        "color-gray-1": "#efefef",
       },
       fontFamily: {
         inter: "'Inter', sans-serif",
