@@ -10,7 +10,24 @@ const authApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/jwt/logout",
+        method: "POST",
+        credentials: "include",
+        body: {},
+      }),
+    }),
+    loginCheck: builder.mutation({
+      query: () => ({
+        url: "/jwt/checklogin",
+        method: "POST",
+        credentials: "include",
+        body: {},
+      }),
+    }),
   }),
 });
 
-export const { useGetTokenMutation } = authApi;
+export const { useGetTokenMutation, useLogoutMutation, useLoginCheckMutation } =
+  authApi;
