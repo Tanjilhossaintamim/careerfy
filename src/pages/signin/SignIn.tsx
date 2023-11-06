@@ -1,10 +1,13 @@
 import { CiUser } from "react-icons/ci";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { BiLoaderAlt } from "react-icons/bi";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../utils/firebase";
+import { useGetTokenMutation } from "../../redux/features/auth/authApi";
+import toast from "react-hot-toast";
 
 interface InputFields {
   email: string;
@@ -13,6 +16,9 @@ interface InputFields {
 
 const SignIn = () => {
   const [showPassword, setshowPassword] = useState<boolean>(false);
+  const [loading, setloading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [getToken, { data }] = useGetTokenMutation();
   // form handel with react hoooks form
   const {
     register,
@@ -29,12 +35,26 @@ const SignIn = () => {
   };
   // sign in with firebase
   const handelSignIn = ({ email, password }: InputFields) => {
+    setloading(true);
     signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        console.log(res.user);
+      .then(() => {
+        // GET A ACCESS TOKEN
+        getToken({ email });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+        setloading(false);
+      });
   };
+
+  useEffect(() => {
+    if (data?.success) {
+      setloading(false);
+      toast.success("successfully logged in !");
+      navigate("/");
+    }
+  }, [data, navigate]);
 
   return (
     <div className="max-w-5xl mx-auto flex justify-center items-center min-h-[70vh] px-4 lg:px-0">
@@ -95,8 +115,17 @@ const SignIn = () => {
             signup
           </Link>
         </p>
-        <button className="uppercase bg-color-sky w-full text-center rounded text-white py-2 mt-10">
-          Sign in
+        <button
+          disabled={loading}
+          className="uppercase bg-color-sky w-full text-center rounded text-white py-2 mt-10 flex justify-center items-center"
+        >
+          {loading ? (
+            <span className="text-2xl">
+              <BiLoaderAlt className="animate-spin" />
+            </span>
+          ) : (
+            "Sign in"
+          )}
         </button>
 
         <span className="block uppercase bg-[#4285f4] w-full text-center rounded text-white py-2 mt-10">

@@ -5,7 +5,8 @@ const authApi = api.injectEndpoints({
     getToken: builder.mutation({
       query: (data) => ({
         url: "/jwt",
-        credentials:'include',
+        method: "POST",
+        credentials: "include",
         body: data,
       }),
     }),
