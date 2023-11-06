@@ -4,8 +4,15 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface state {
   loading: boolean;
   isLoggedIn: boolean;
-  user: object;
+  user?:
+    | {
+        displayName: string;
+        photoUrl: string;
+        email: string;
+      }
+    | object;
 }
+
 const initialState: state = {
   loading: true,
   isLoggedIn: false,
