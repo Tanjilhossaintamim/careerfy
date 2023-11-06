@@ -1,12 +1,16 @@
 import { CiUser } from "react-icons/ci";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { singupSchema } from "../../utils/schema";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import auth from "../../utils/firebase";
+import { useGetTokenMutation } from "../../redux/features/auth/authApi";
+import toast from "react-hot-toast";
+import { BiLoaderAlt } from "react-icons/bi";
+import GoogleButton from "../../components/GoogleSignInButton/GoogleButton";
 
 interface InputFields {
   email: string;
@@ -17,6 +21,9 @@ interface InputFields {
 
 const Signup = () => {
   const [showPassword, setshowPassword] = useState<boolean>(false);
+  const [loading, setloading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [getToken, { data }] = useGetTokenMutation();
 
   const {
     register,
@@ -39,18 +46,26 @@ const Signup = () => {
         updateProfile(currentUser, { displayName: name, photoURL: photo })
           .then((response) => {
             console.log(response);
+            getToken({ email });
           })
           .catch((error) => {
             console.log(error);
+            toast.error(error.message);
           });
       })
       .catch((err) => {
         console.log(err);
+        setloading(false);
       });
   };
-
+  useEffect(() => {
+    if (data?.success) {
+      navigate("/");
+      toast.success("logged in successfully !");
+    }
+  }, [data,navigate]);
   return (
-    <div className="max-w-5xl mx-auto flex justify-center items-center min-h-[70vh] px-4 lg:px-0">
+    <div className="max-w-5xl mx-auto flex justify-center items-center min-h-[70vh] px-4 lg:px-0 my-6">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full lg:w-2/3 mx-auto"
@@ -137,13 +152,20 @@ const Signup = () => {
             signin
           </Link>
         </p>
-        <button className="uppercase bg-color-sky w-full text-center rounded text-white py-2 mt-10">
-          Sign up
+        <button
+          disabled={loading}
+          className="uppercase bg-color-sky w-full text-center rounded text-white py-2 mt-10"
+        >
+          {loading ? (
+            <span className="text-2xl">
+              <BiLoaderAlt className="animate-spin" />
+            </span>
+          ) : (
+            "Sign Up"
+          )}
         </button>
 
-        <span className="block uppercase bg-[#4285f4] w-full text-center rounded text-white py-2 mt-10">
-          Sign in With Google
-        </span>
+        <GoogleButton />
       </form>
     </div>
   );

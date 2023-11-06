@@ -8,6 +8,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../utils/firebase";
 import { useGetTokenMutation } from "../../redux/features/auth/authApi";
 import toast from "react-hot-toast";
+import GoogleButton from "../../components/GoogleSignInButton/GoogleButton";
 
 interface InputFields {
   email: string;
@@ -128,9 +129,7 @@ const SignIn = () => {
           )}
         </button>
 
-        <span className="block uppercase bg-[#4285f4] w-full text-center rounded text-white py-2 mt-10">
-          Sign in With Google
-        </span>
+        <GoogleButton />
       </form>
     </div>
   );
