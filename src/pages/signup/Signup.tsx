@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { singupSchema } from "../../utils/schema";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import auth from "../../utils/firebase";
 
 interface InputFields {
   email: string;
@@ -12,6 +14,7 @@ interface InputFields {
   photo: string;
   password: string;
 }
+
 const Signup = () => {
   const [showPassword, setshowPassword] = useState<boolean>(false);
 
@@ -24,10 +27,26 @@ const Signup = () => {
   });
 
   const onSubmit: SubmitHandler<InputFields> = (data) => {
-    console.log(data);
+    handelSignUp(data);
   };
   const handelTogglePassword = () => {
     setshowPassword((prev) => !prev);
+  };
+  const handelSignUp = ({ email, password, name, photo }: InputFields) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        const currentUser = res.user;
+        updateProfile(currentUser, { displayName: name, photoURL: photo })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

@@ -3,6 +3,8 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import auth from "../../utils/firebase";
 
 interface InputFields {
   email: string;
@@ -11,20 +13,28 @@ interface InputFields {
 
 const SignIn = () => {
   const [showPassword, setshowPassword] = useState<boolean>(false);
-
+  // form handel with react hoooks form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<InputFields>();
-  
+
   const onSubmit: SubmitHandler<InputFields> = (data) => {
-    console.log(data);
+    handelSignIn(data);
   };
+  // toggle password funtion
   const handelTogglePassword = () => {
     setshowPassword((prev) => !prev);
   };
-
+  // sign in with firebase
+  const handelSignIn = ({ email, password }: InputFields) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="max-w-5xl mx-auto flex justify-center items-center min-h-[70vh] px-4 lg:px-0">
