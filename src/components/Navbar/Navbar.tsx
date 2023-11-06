@@ -60,7 +60,7 @@ const Navbar = () => {
     });
   };
   return (
-    <header className="py-4 px-4">
+    <header className="py-4 px-4 sticky top-0 z-50 bg-white">
       <nav className="max-w-5xl mx-auto flex items-center justify-between">
         {/* left side */}
         <div className="flex items-center">
