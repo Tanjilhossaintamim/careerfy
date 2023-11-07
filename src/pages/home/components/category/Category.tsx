@@ -59,7 +59,7 @@ const Category = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-7">
                   {jobs?.length > 0 &&
                     jobs.map((job: JobInterface) => (
-                      <JobCard key={job._id} job={job} />
+                      <JobCard key={job._id} job={job} showDeleteBtn={false} />
                     ))}
                 </div>
               </TabsBody>

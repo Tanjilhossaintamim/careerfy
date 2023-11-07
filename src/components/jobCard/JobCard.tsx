@@ -1,4 +1,5 @@
 import moment from "moment";
+import { RxCross2 } from "react-icons/rx";
 interface JobInterface {
   job: {
     _id: string;
@@ -12,8 +13,9 @@ interface JobInterface {
       title: string;
     };
   };
+  showDeleteBtn: boolean;
 }
-const JobCard = ({ job }: JobInterface) => {
+const JobCard = ({ job, showDeleteBtn }: JobInterface) => {
   const {
     photoUrl,
     jobTitle,
@@ -36,7 +38,14 @@ const JobCard = ({ job }: JobInterface) => {
       </div>
       <div className="w-full">
         <div className="p-2 flex flex-col space-y-2">
-          <h1 className="text-[#333] font-semibold text-lg">{jobTitle}</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-[#333] font-semibold text-lg">{jobTitle}</h1>
+            {showDeleteBtn && (
+              <span className="text-xl text-red-700 cursor-pointer">
+                <RxCross2 />
+              </span>
+            )}
+          </div>
           <span
             className={`p-1 inline-block w-fit text-sm text-white rounded`}
             style={{ backgroundColor: color }}

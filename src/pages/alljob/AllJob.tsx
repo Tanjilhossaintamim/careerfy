@@ -29,7 +29,7 @@ const AllJob = () => {
   if (jobs?.length == 0) content = <div>No Data Found !</div>;
   if (jobs?.length > 0)
     content = jobs.map((job: JobInterface) => (
-      <JobCard key={job._id} job={job} />
+      <JobCard key={job._id} job={job} showDeleteBtn={false} />
     ));
 
   return (
