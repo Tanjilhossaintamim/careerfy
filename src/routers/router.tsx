@@ -5,6 +5,7 @@ import SignIn from "../pages/signin/SignIn";
 import Signup from "../pages/signup/Signup";
 import Addjob from "../pages/addjob/Addjob";
 import AllJob from "../pages/alljob/AllJob";
+import MyJob from "../pages/myjob/MyJob";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/alljobs",
         element: <AllJob />,
+      },
+      {
+        path: "/myjobs",
+        element: <MyJob />,
       },
     ],
   },
