@@ -21,7 +21,10 @@ const Category = () => {
   const [categoryValue, setCategoryValue] = useState("on-site");
 
   const { data: categories } = useGetCategoryQuery({});
-  const { data: jobs } = useGetAllJobsQuery({ category: categoryValue });
+  const { data: jobs } = useGetAllJobsQuery({
+    category: categoryValue,
+    title: "",
+  });
 
   const handelFetchJobs = (category: string) => {
     setCategoryValue(category);

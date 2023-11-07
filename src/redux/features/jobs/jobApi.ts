@@ -3,7 +3,8 @@ import api from "../api/api";
 const jobApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllJobs: builder.query({
-      query: ({ category }) => `/jobs?category=${category && category}`,
+      query: ({ category, title }) =>
+        `/jobs?category=${category}&title=${title}`,
     }),
     postJob: builder.mutation({
       query: (data) => ({
