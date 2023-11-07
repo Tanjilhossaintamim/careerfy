@@ -30,7 +30,6 @@ const RootLayout = () => {
         dispatch(setLoggedIn(false));
       }
       dispatch(setLoadingState(false));
-      console.log(currentUser);
     });
     return () => subscribe();
   }, []);

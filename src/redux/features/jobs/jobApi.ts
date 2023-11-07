@@ -7,12 +7,11 @@ const jobApi = api.injectEndpoints({
         `/jobs?category=${category}&title=${title}`,
     }),
     getMyJobs: builder.query({
-      query: ({ category, title }) =>({
-        url:`/jobs/myjobs/me?category=${category}&title=${title}`,
-        credentials:'include',
-        method:'GET'
-      })
-        
+      query: ({ category, title }) => ({
+        url: `/jobs/myjobs/me?category=${category}&title=${title}`,
+        credentials: "include",
+        method: "GET",
+      }),
     }),
     postJob: builder.mutation({
       query: (data) => ({
@@ -22,8 +21,19 @@ const jobApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    fetchSingelJob: builder.query({
+      query: (id) => ({
+        url: `/jobs/${id}`,
+        method: "GET",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const { useGetAllJobsQuery, usePostJobMutation, useGetMyJobsQuery } =
-  jobApi;
+export const {
+  useGetAllJobsQuery,
+  usePostJobMutation,
+  useGetMyJobsQuery,
+  useFetchSingelJobQuery,
+} = jobApi;

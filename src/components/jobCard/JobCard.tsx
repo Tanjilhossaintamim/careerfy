@@ -1,5 +1,6 @@
 import moment from "moment";
 import { RxCross2 } from "react-icons/rx";
+import { Link } from "react-router-dom";
 interface JobInterface {
   job: {
     _id: string;
@@ -17,6 +18,7 @@ interface JobInterface {
 }
 const JobCard = ({ job, showDeleteBtn }: JobInterface) => {
   const {
+    _id,
     photoUrl,
     jobTitle,
     jobCategory,
@@ -62,10 +64,11 @@ const JobCard = ({ job, showDeleteBtn }: JobInterface) => {
             <h1 className="text-xs text-color-gray flex-grow">
               Salary range &#2547;{salaryRangeFrom} - &#2547;{salaryRangeTo}
             </h1>
-
-            <button className="bg-[#186FC9] text-white px-2 py-1 rounded">
-              view details
-            </button>
+            <Link to={`/jobs/${_id}`}>
+              <button className="bg-[#186FC9] text-white px-2 py-1 rounded">
+                view details
+              </button>
+            </Link>
           </div>
         </div>
       </div>
