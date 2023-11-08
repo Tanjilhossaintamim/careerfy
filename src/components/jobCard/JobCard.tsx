@@ -1,6 +1,8 @@
 import moment from "moment";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { useApplyJobMutation } from "../../redux/features/appliedJob/appliedJobapi";
+import { useAppSelector } from "../../redux/app/hooks";
 interface JobInterface {
   job: {
     _id: string;
@@ -17,6 +19,7 @@ interface JobInterface {
   showDeleteBtn: boolean;
 }
 const JobCard = ({ job, showDeleteBtn }: JobInterface) => {
+
   const {
     _id,
     photoUrl,
@@ -33,6 +36,8 @@ const JobCard = ({ job, showDeleteBtn }: JobInterface) => {
   if (jobCategory.title == "hybrid") color = "#53B427";
   if (jobCategory.title == "remote") color = "#186FC9";
   if (jobCategory.title == "part-time") color = "#009CDF";
+
+  
   return (
     <div className="max-w-[500px] border border-color-gray-1 flex items-center">
       <div className="w-1/4 relative border-r border-color-gray-1 flex justify-center items-center">

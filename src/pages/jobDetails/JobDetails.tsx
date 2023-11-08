@@ -2,11 +2,31 @@ import { useParams } from "react-router-dom";
 import { useFetchSingelJobQuery } from "../../redux/features/jobs/jobApi";
 import moment from "moment";
 import { useAppSelector } from "../../redux/app/hooks";
-
+import { ImSpinner } from "react-icons/im";
+import { useApplyJobMutation } from "../../redux/features/appliedJob/appliedJobapi";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 const JobDetails = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { id } = useParams();
   const { data: job, isError, isLoading } = useFetchSingelJobQuery(id);
+  const [
+    applyJob,
+    { isSuccess, isLoading: jobIsLoading, isError: jobError, error },
+  ] = useApplyJobMutation();
+
+  const handelJobapply = () => {
+    applyJob({ applicantName: user?.displayName, job: id });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("applied successfully !");
+    }
+    if (jobError) {
+      toast.error(error?.data?.message);
+    }
+  }, [isSuccess, jobError]);
 
   let content = null;
   if (isLoading) content = <div>Loading..</div>;
@@ -54,12 +74,23 @@ const JobDetails = () => {
             </span>{" "}
             <br /> {jobDescription}
           </p>
-          <button
-            disabled={userEmail == user?.email}
-            className="bg-[#53B427] text-white py-3 rounded"
-          >
-            Apply For This Job
-          </button>
+          {userEmail !== user?.email && (
+            <button
+              disabled={isLoading}
+              onClick={handelJobapply}
+              className="bg-[#53B427] text-white py-3 rounded flex justify-center items-center"
+            >
+              {" "}
+              {jobIsLoading ? (
+                <span className="flex items-center space-x-2">
+                  <span>Applying..</span>{" "}
+                  <ImSpinner size={20} className="animate-spin" />
+                </span>
+              ) : (
+                " Apply For This Job"
+              )}
+            </button>
+          )}
         </div>
       </>
     );
