@@ -7,6 +7,9 @@ import Addjob from "../pages/addjob/Addjob";
 import AllJob from "../pages/alljob/AllJob";
 import MyJob from "../pages/myjob/MyJob";
 import JobDetails from "../pages/jobDetails/JobDetails";
+import AppliedJob from "../pages/appliedjob/AppliedJob";
+import PrivateRouter from "./PrivateRouter";
+import Publicroute from "./Publicroute";
 
 const router = createBrowserRouter([
   {
@@ -19,15 +22,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/signin",
-        element: <SignIn />,
+        element: (
+          <Publicroute>
+            <SignIn />
+          </Publicroute>
+        ),
       },
       {
         path: "/signup",
-        element: <Signup />,
+        element: (
+          <Publicroute>
+            <Signup />
+          </Publicroute>
+        ),
       },
       {
         path: "/addjob",
-        element: <Addjob />,
+        element: (
+          <PrivateRouter>
+            <Addjob />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/alljobs",
@@ -35,14 +50,34 @@ const router = createBrowserRouter([
       },
       {
         path: "/myjobs",
-        element: <MyJob />,
+        element: (
+          <PrivateRouter>
+            <MyJob />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/jobs/:id",
-        element: <JobDetails />,
+        element: (
+          <PrivateRouter>
+            <JobDetails />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/appliedjobs",
+        element: (
+          <PrivateRouter>
+            <AppliedJob />
+          </PrivateRouter>
+        ),
       },
     ],
   },
 ]);
+<PrivateRouter>
+  {" "}
+  <Addjob />
+</PrivateRouter>;
 
 export default router;

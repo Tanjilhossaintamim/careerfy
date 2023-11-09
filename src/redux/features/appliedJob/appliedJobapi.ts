@@ -10,7 +10,14 @@ const appliedJobapi = api.injectEndpoints({
         body: data,
       }),
     }),
+    fetchAppliedJobs: builder.query({
+      query: () => ({
+        url: "/appliedjobs",
+        method: "GET",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const {useApplyJobMutation} = appliedJobapi;
+export const { useApplyJobMutation, useFetchAppliedJobsQuery } = appliedJobapi;

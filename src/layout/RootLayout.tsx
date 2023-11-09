@@ -11,6 +11,7 @@ import {
   setLoggedInUser,
 } from "../redux/features/auth/authSlice";
 import useAuthCheck from "../hooks/useAuthCheck";
+import Footer from "../components/Footer/Footer";
 
 const RootLayout = () => {
   const dispatch = useAppDispatch();
@@ -38,6 +39,7 @@ const RootLayout = () => {
       <Toaster />
       <Navbar />
       <Outlet />
+      <Footer />
     </div>
   );
 };
