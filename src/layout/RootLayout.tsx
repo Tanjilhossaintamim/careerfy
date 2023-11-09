@@ -22,7 +22,7 @@ const RootLayout = () => {
         const user = {
           email: currentUser.email,
           displayName: currentUser.displayName,
-          photoUrl: currentUser.photoURL,
+          photoUrl: currentUser.photoURL || "",
         };
         dispatch(setLoggedInUser(user));
         dispatch(setLoggedIn(true));

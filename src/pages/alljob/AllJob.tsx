@@ -37,7 +37,7 @@ const AllJob = () => {
       <div className="max-w-5xl mx-auto my-10 px-4 lg:px-0">
         <div className="mb-10 flex justify-between flex-wrap items-center">
           <Filter onchange={setfilter} />
-          <SearchBox onchange={setTitle} />
+          <SearchBox onChange={setTitle} />
         </div>
         <div className="flex items-center flex-wrap gap-6">{content}</div>
       </div>

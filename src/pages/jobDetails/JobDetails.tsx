@@ -10,10 +10,8 @@ const JobDetails = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { id } = useParams();
   const { data: job, isError, isLoading } = useFetchSingelJobQuery(id);
-  const [
-    applyJob,
-    { isSuccess, isLoading: jobIsLoading, isError: jobError, error },
-  ] = useApplyJobMutation();
+  const [applyJob, { isSuccess, isLoading: jobIsLoading, isError: jobError }] =
+    useApplyJobMutation();
 
   const handelJobapply = () => {
     applyJob({ applicantName: user?.displayName, job: id });
@@ -24,7 +22,7 @@ const JobDetails = () => {
       toast.success("applied successfully !");
     }
     if (jobError) {
-      toast.error(error?.data?.message);
+      toast.error("you already applied for this job");
     }
   }, [isSuccess, jobError]);
 

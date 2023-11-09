@@ -13,8 +13,8 @@ type Input = {
   photo: string;
   description: string;
   category: string;
-  start: number;
-  end: number;
+  start: string;
+  end: string;
 };
 interface JobData {
   photoUrl: string;
@@ -29,16 +29,17 @@ interface JobData {
 const Addjob = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data: categories } = useGetCategoryQuery(undefined);
-  const [postJob, { isLoading, isError, isSuccess, error, data: job }] =
+  const [postJob, { isLoading, isError, isSuccess, data: job }] =
     usePostJobMutation();
 
   const [endDate, setEndDate] = useState<Date>(new Date());
   const { register, handleSubmit, reset } = useForm<Input>();
   const onSubmit: SubmitHandler<Input> = (data) => {
     const { photo, title, description, category, start, end } = data;
+    console.log(typeof start);
     const jobData: JobData = {
       photoUrl: photo,
-      userName: user?.displayName,
+      userName: user?.displayName || "",
       jobTitle: title,
       jobCategory: category,
       jobDescription: description,
@@ -50,13 +51,13 @@ const Addjob = () => {
   };
   useEffect(() => {
     if (isError) {
-      toast.error(error?.data?.message);
+      toast.error("a unknown error !");
     }
     if (isSuccess && job?._id) {
       toast.success("job added successfully !");
       reset();
     }
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, job?._id, reset]);
   return (
     <div>
       <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">

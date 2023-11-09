@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const AppliedJob = () => {
   const { data } = useFetchAppliedJobsQuery({});
-  console.log(data);
 
   return (
     <div>
@@ -52,44 +51,51 @@ const AppliedJob = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.map((job) => (
-                <tr key={job?._id}>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-medium"
-                    >
-                      {job.job?.jobTitle}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-medium"
-                    >
-                      {job.applicantName}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-medium"
-                    >
-                      {job.applicantEmail}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Link to={`/jobs/${job.job._id}`}>
-                      <button className="px-4 py-1 bg-color-sky text-white rounded">
-                        View Details
-                      </button>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+              {data?.map(
+                (job: {
+                  _id: "string";
+                  applicantName: string;
+                  applicantEmail: string;
+                  job: { jobTitle: string; applicantName: string; _id: string };
+                }) => (
+                  <tr key={job?._id}>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-medium"
+                      >
+                        {job.job?.jobTitle}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-medium"
+                      >
+                        {job.applicantName}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-medium"
+                      >
+                        {job.applicantEmail}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Link to={`/jobs/${job.job._id}`}>
+                        <button className="px-4 py-1 bg-color-sky text-white rounded">
+                          View Details
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         </Card>

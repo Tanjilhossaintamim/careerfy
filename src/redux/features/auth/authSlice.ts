@@ -1,16 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+interface User {
+  displayName: string | null;
+  photoUrl: string;
+  email: string | null;
+}
 interface state {
   loading: boolean;
   isLoggedIn: boolean;
-  user?:
-    | {
-        displayName: string;
-        photoUrl: string;
-        email: string;
-      }
-    | object;
+  user?: User | Record<string, never>;
 }
 
 const initialState: state = {
@@ -23,7 +22,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setLoggedInUser: (state, action: PayloadAction<object>) => {
+    setLoggedInUser: (
+      state,
+      action: PayloadAction<User | Record<string, never>>
+    ) => {
       state.user = action.payload;
     },
     setLoggedIn: (state, action) => {
